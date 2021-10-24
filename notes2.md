@@ -6,6 +6,8 @@ header-includes:
     - \usepackage{amsmath}
     - \DeclareMathOperator{\lcm}{lcm}
     - \DeclareMathOperator{\Inn}{Inn}
+    - \DeclareMathOperator{\Ker}{Ker}
+    - \DeclareMathOperator{\Aut}{Aut}
 output: pdf_document
 ---
 
@@ -243,3 +245,189 @@ Thus $Z_2 \oplus Z_{30} \approx Z_6 \oplus Z_{10}$. HOWEVER, $Z_2 \oplus Z_{30} 
 &nbsp; Finally we take nonidentity $x$ and an element $y \notin \langle x \rangle$. Then by comparing orders, we have that $G = \langle x \rangle \times \langle y \rangle \approx Z_p \oplus Z_p$
 
 **Corollary**: if $|G| = p^2$ then $G$ is Abeliean
+
+# Chapter 10 Group Homomorphisms
+
+**Definition**: a **homomorphism** $\phi: G \rightarrow \bar{G}$ is a function that preverses operation $\phi(ab) = \phi(a)\phi(b) \quad \quad \forall a,b \ in G$
+
+
+**Definition**: $\Ker(\phi) = \{x \in G \mid \phi(x) = e\}$
+
+**Examples**:
+
+- Any isomoprhim is a homomorphism that is a bijection. The Kernel of an isomorphism is $\{e\}$
+- $\phi:GL(2, R) \rightarrow R^*$ is an homomorphism under $A \rightarrow \det(A)$. The Kernel is $SL(2, R)$
+- $\phi: R^* \rightarrow R^*$ is an homomorphism under $\phi(x) = |x|$. The Kernel is $\{1, -1\}$
+- $\phi: Z \rightarrow Z_n$ is a homomorphism under $\phi(m) = m \pmod{n}$. The Kernel is $\langle n \rangle$
+- $\phi: R^* \rightarrow R^*$ is an homomorphism under $\phi(x) = x^2$ since $\phi(ab) = (ab)^2 = a^2b^2 = \phi(a) \phi(b)$. The Kernel is $\{1, -1\}$
+- $\phi: R \rightarrow R^*$ is NOT a homomorphism under $\phi(x) = x^2$ since $\phi(a + b) = (a + b)^2 \neq a^2 + b^2 = \phi(a)\phi(b)$
+
+**Propertiest of Elements under Homomorphisms**
+
+1. $\phi$ carries identity of $G$ to identity of $\bar{G}$
+
+&nbsp; &nbsp; &nbsp; $\phi(e) = \phi(e)\phi(e) = \phi(e)\phi(e) \implies \bar{e} = \phi(e)$
+
+2. $\phi(g^n) = (\phi(g))^n$
+
+&nbsp; &nbsp; &nbsp; For $n > 0$ follows from definition of homomorphism and induction
+
+&nbsp; &nbsp; For $n < 0$, $e = \phi(e) = \phi(g^ng^{-n}) = \phi(g^n) \phi(g^{-n}) = \phi(g^n)(\phi(g))^{-n} \implies \phi(g^n) = (\phi(g))^n$
+
+3. $|g| < \infty \implies |\phi(g)|$ divides $|g|$
+
+&nbsp; &nbsp; &nbsp; $g^n = e \implies e = \phi(e) = \phi(g^n) = (\phi(g))^n \implies |\phi(g)|$ divides $n$
+
+4. $\Ker(\phi)$ is a subgroup of $G$
+
+&nbsp; &nbsp; &nbsp; Clearly $e \in \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; If $a, b \in \Ker(\phi)$, then $\phi(a)\phi(b) = ee = \phi(ab) \implies ab \in \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; If $a \in \Ker(\phi)$, then $\phi(a)(\phi(a))^{-1} = \phi(a)\phi(a^{-1}) = e \implies a^{-1} \in \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; Thus by 2 step subgroup test, $\Ker(\phi) \leq G$
+
+5. $\phi(a) = \phi(b) \iff a \Ker(\phi) = b \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; $\implies e = \phi(b^{-1})\phi(a) = \phi(b^{-1}a) \implies b^{-1} a \in \Ker(\phi)$. 
+
+&nbsp; &nbsp; &nbsp; Then by properties of cosets, we know that $a\Ker(\phi) = b\Ker(\phi) \iff ab^{-1} \in \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; $\impliedby$ above process can be reversed to yield desired result
+
+6. $\phi(g) = g' \implies \phi^{-1}(g') = \{x \in G \mid \phi(x) = g'\} = g\Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; Show that $\phi^{-1}(g') \subseteq g \Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; Take $x \in \phi^{-1}(g')$, so $\phi(x) = g'$. Then $\phi(g) = \phi(x) \implies g\Ker(\phi) = x\Ker(\phi) \implies x \in g\Ker(\phi)$
+
+&nbsp; &nbsp; &nbsp; Show that $g \Ker(\phi) \subseteq \phi^{-1}(g')$
+
+&nbsp; &nbsp; &nbsp; Take $k \in \Ker(\phi) \implies \phi(gk) = \phi(g)\phi(k) = g'e = g'$. Thus $gk \in \phi^{-1}(g')$
+
+&nbsp; &nbsp; &nbsp; Thus $\phi^{-1}(g') = g \Ker(\phi)$
+
+
+**Properties of Subgroups under Homomorphisms**
+
+1. $\phi(H) = \{\phi(h) \mid h \in H \} \leq \bar{G}$
+
+&nbsp; &nbsp; &nbsp; We know $\phi$ carries $e \in G$ to $\bar{e} \in \bar{G}$
+
+&nbsp; &nbsp; &nbsp; Let $a, b \in H$ then let $x = \phi(a), y = \phi(b)$. Then $xy = \phi(a)\phi(b) = \phi(ab) \in \phi(H)$ since $ab \in H$
+
+&nbsp; &nbsp; &nbsp; Let $a, a^{-1} \in H$. Then $\phi(a^{-1}) = (\phi(a))^{-1} \in \phi(H)$
+
+2. $H$ cyclic $\implies \phi(H)$ is cyclic
+
+&nbsp; &nbsp; &nbsp; Let $h \in H$ be the generator. Then $\phi(h^n) = \phi(h)^n$ and generates $\phi(H)$
+
+3. $H$ Abeliean $\implies \phi(H)$ is Abelian
+
+&nbsp; &nbsp; &nbsp; Let $a, b \in H$ with $ab = ba$. Then $\phi(ab) = \phi(a)\phi(b) = \phi(b)\phi(a) = \phi(ba)$
+
+4. $H \trianglelefteq G \implies \phi(H) \trianglelefteq \phi(G)$
+
+&nbsp; &nbsp; &nbsp; Take $\phi(h) \in \phi(H)$ and $\phi(g) \in \phi(G)$, then $\phi(g) \phi(h) \phi(g^{-1}) = \phi(ghg^{-1}) \in \phi(H)$
+
+5. $|\Ker(\phi)| = n \implies \phi$ is an $n$-to-$1$ mapping from $G$ onto $\phi(G)$
+
+&nbsp; &nbsp; &nbsp; All cosets of $\Ker(\phi) = \phi^{-1}(e)$ have the same number of elements
+
+6. $|H| = n \implies |\phi(H)|$ divides $n$
+
+&nbsp; &nbsp; &nbsp; Take $\phi_H$ that only maps from $H$. Then $\phi_H$i if a homomorphism from $H$ onto $\phi(H)$.
+
+&nbsp; &nbsp; &nbsp; Suppose $|\Ker(\phi_H)| = t$. Then we have $\phi_t$ is a $t$-to-$1$ mapping so $|\phi(H)|t = |H|$
+
+7. $\bar{K} \leq \bar{G} \implies \phi^{-1}(\bar{K}) = \{ k \in G \mid \phi(k) \in \bar{K}\} \leq G$
+
+&nbsp; &nbsp; &nbsp; We know that $e \in \phi^{-1}(\bar{K})$
+
+&nbsp; &nbsp; &nbsp; For $a, b \in \phi^{-1}(\bar{K})$, we have that $\phi(a)\phi(b) = \phi(ab) \in \bar{K} \implies ab \in \phi^{-1}(\bar{K})$ by closure properties
+
+&nbsp; &nbsp; &nbsp; For $a \in \phi^{-1}(\bar{K})$, we have that $\phi(a)(\phi(a))^{-1} = \phi(a)\phi(a^{-1}) = e \implies a^{-1} \in \phi^{-1}(\bar{K})$
+
+&nbsp; &nbsp; &nbsp; Thus by 2 step subgroup test, $\phi^{-1}(\bar{K}) \leq G$
+
+8. $\bar{K} \trianglelefteq \bar{G} \implies \phi^{-1}(\bar{K}) \trianglelefteq G$
+
+&nbsp; &nbsp; &nbsp; Take $xkx^{-1}$ for $\phi(k) \in \bar{K}$.
+
+&nbsp; &nbsp; &nbsp; Since $\bar{K} \trianglelefteq \bar{G}$, $\phi(xkx^{-1}) = \phi(x)\phi(k)(\phi(x))^{-1} \in \bar{K} \implies xkx^{-1} \in \phi^{-1}(\bar{K})$
+
+
+9. If $\phi$ is onto and $\Ker(\phi) = \{e\}$, then $\phi$ is an ismorphism from $G \rightarrow \bar{G}$
+
+&nbsp; &nbsp; &nbsp; Since $|\Ker(\phi)| = 1$, then $\phi$ is a $1$-to-$1$ mapping from $G$ onto $\phi(G)$. Onto is another necessary property of ismoprhism
+
+**Corollary**: $\Ker(\phi) \trianglelefteq G$ (follows from property $8$)
+
+**Example**: Consider $\phi: C^* \rightarrow C^*$ with $\phi(x) = x^4$. Since $(xy)^r = x^4 y^4$, $\phi$ is a homomorphism
+
+&nbsp; $\Ker(\phi) = \{1, -1, i, -i\}$. Thus $\phi$ is a $4$-to-$1$ mapping. 
+
+&nbsp; To find all elements that map to $2$, we take $\sqrt[4]{2} \Ker(\phi) = \{\sqrt[4]{2}, -\sqrt[4]{2}, \sqrt[4]{2}i, -\sqrt[4]{2}i\}$
+
+**Example**: Let $\phi: Z_{12} \rightarrow Z_{12}$ with $\phi(x) = 3x$. For $Z_{12}, $3(a+b) = 3a + 3b$ is clearly a homomorphism
+
+&nbsp; Direct calculations show that $\Ker(\phi) = \{0, 4, 8\}$, which means that $\phi$ is a $3$-to-$1$ mapping.
+
+&nbsp; Since $\phi(2) = 6$, we have that $\phi^{-1}(6) = 2 + \Ker(\phi) = \{2, 6, 10\}$
+
+&nbsp; Notice that $\langle 2 \rangle$ and $\phi(\langle 2\rangle)$ are cyclic
+
+&nbsp; Notice that $|2| = 6$ and $|\phi(2)| = 2$ so $|\phi(2)|$ divides $|2|$
+
+&nbsp; Notice that $\bar{K} = \{0, 6\}$, we see that $\phi^{-1}(\bar{K}) = \{0, 2, 4, 6, 8, 10\} \leq Z_{12}$
+
+**Example**: Determine all homomorphisms from $Z_{12} \rightarrow Z_{30}$
+
+&nbsp; We know that all homomorphisms are determined by image of $1$. So $\phi(1) = a \implies \phi(x) = xa$
+
+&nbsp; By Lagrange's Theorem, we know that $|a|$ divides $|a|$ divides $12, 30$. So possible values of $|a| \in \{1, 2, 3, 6\}$
+
+&nbsp; Thus $a \in \{0, 15, 10, 20, 5, 25\}$, which are all the possible homomorphisms
+
+&nbsp;
+
+**First Isomorphism Theorem**: Homomorphism mapping $\phi: G/\Ker(\phi) \rightarrow \phi(G)$ where $g\Ker(\phi) \rightarrow \phi(g)$, is an isormophism. So $G/\Ker(\phi) \approx \phi(G)$
+
+&nbsp; Let $\psi$ denote $g\Ker(\phi) \rightarrow \phi(g)$. $\psi$ is $1$-to-$1$ since $\phi(a) = \phi(b) \iff a\Ker(\phi) = b\Ker(\phi)$
+
+&nbsp; Operation Preserving: $\psi(x\Ker(\phi)y\Ker(\phi)) = \psi(xy \Ker(\phi)) = \phi(xy) = \phi(x)(\phi(y) = \psi(x\Ker(\phi)) \psi(y\Ker(\phi))$
+
+**Corollary**: if $\phi$ is a homomorphism from $G \rightarrow \bar{G}$, then $|\phi(G)|$ divides $|G|$ and $|\bar{G}|$
+
+**Example**: Let $H = \{A \in GL(2, R) \mid \det(A) = \pm 1\}$. Then mapping $\phi(A) = \det(A)$ from $GL(2,R)$ onto $R^*$ shows that $GL(2, R) / SL(2, R) \approx R^*$, and the mapping $\phi(A) = (\det(A))^2$ from $GL(2, R)$ onto $R^+$ shows that $GL(2, R)/H \approx R^+$
+
+**Example**: Consider a mapping from $Z \rightarrow Z_n$. Clearly the kernel is $\langle n \rangle$. Thus $Z/\langle n \rangle \approx Z_n$
+
+**Example**: let $H \leq H$. Let $N(H) = \{x \in G \mid xHx^{-1} = H\}$ be the **normalizer** of $H$ in and $C(H) = \{x \in G \mid xhx^{-1} = h \quad \forall h \in H\}$ be the **centralizer** of $H$. Then the mapping from $N(H)$ to $\Aut(H)$ given by $g \rightarrow \phi_g$ (inner autmorphism) is a homomorphism with kernel $C(H)$. Thus $N(H)/C(H) \approx$ subgroup of $\Aut(H)$
+
+<!-- **Example**: Let $|G| = 35$. By Lagrange's Theorem, non identity elements have order $\in \{5, 7, 35\}$. If $G$ is NOT cyclic, then non identity elements must have order $5$ or $7$ -->
+
+<!-- &nbsp; However, not all elements can have order $5$ since elements of order $5$ come $4$ at a time($|x| = |x^2| = |x^3| = |x^4|= 5)$ and $4$ doesn't divide $35 - 1 = 34$ -->
+
+<!-- &nbsp; Similary, not all elements have order $7$ since elements of order $7$ come $6$ at a time -->
+
+<!-- &nbsp; We know that $G$ has an element of order $7$, it generates a subgroup of order $7$, call it $H$ -->
+
+<!-- &nbsp; $H$ is the only subgroup of order $7$. Otherwise there would be another subgroup $K$ of order $7$ and thus $|HK| = |H||K|/|H \cap K| = 49 > 35$. Contradiction -->
+
+<!-- &nbsp; Since for $a \in G$, $|aHa^{-1}| = 7$, then $aHa^{-1} = H$. Thus $N(H) = G$ -->
+
+<!-- &nbsp; Since $H$ has prime order, it is cyclic and therefore Abeliean. Thus $H \subseteq C(H)$, so $7$ divides $|C(H)|$ and $|C(H)|$ divides $35$ -->
+
+<!-- &nbsp; Thus $C(H) = G$ or $C(H) = H$ -->
+
+<!-- &nbsp; For $C(H) = G$, then we can create an element $x = hk$ of order $35$. Thus $G$ must be cyclic. -->
+
+&nbsp;
+
+**Theorem**: Every normal subgroup of $G$ is the kernel of a homomorphism of $\phi(g) = gN$ from $G \rightarrow G/N$
+
+&nbsp; Proof: define $\gamma: G \rightarrow G/N$ with $\gamma(g) = gN$ (**natural homomorphism**). Then $\gamma(xy) = (xy)N = xNyN = \gamma(x)\gamma(y)$
+
+&nbsp; Furthermore, $g \in \Ker(\gamma) \iff gN = \gamma(g) = N \iff g \in N$
